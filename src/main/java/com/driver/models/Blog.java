@@ -1,46 +1,31 @@
 package com.driver.models;
+
+
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table
-public class Blog{
+@Table(name="blogs")
+public class Blog {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private  int id;
     private String title;
     private String content;
+    @CreationTimestamp
+    @Temporal(value = TemporalType.TIMESTAMP)
     private Date pubDate;
-    @ManyToOne
-    @JoinColumn
-    private User user;
-    @OneToMany(mappedBy = "blog" , cascade = CascadeType.ALL)
-    private List<Image> imageList;
 
     public Blog() {
     }
-
-    public Blog(String title, String content, Date pubDate) {
+    public Blog(int id,String title, String content) {
+        this.id=id;
         this.title = title;
         this.content = content;
-        this.pubDate = pubDate;
-    }
-
-    public Blog(String title, String content, Date pubDate, User user) {
-        this.title = title;
-        this.content = content;
-        this.pubDate = pubDate;
-        this.user = user;
-    }
-
-    public Blog(int id, String title, String content, Date pubDate, User user, List<Image> imageList) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.pubDate = pubDate;
-        this.user = user;
-        this.imageList = imageList;
     }
 
     public int getId() {
@@ -74,6 +59,13 @@ public class Blog{
     public void setPubDate(Date pubDate) {
         this.pubDate = pubDate;
     }
+
+    @ManyToOne
+    @JoinColumn
+    private User user;
+
+    @OneToMany(mappedBy = "blog",cascade = CascadeType.ALL)
+    private List<Image> imageList;
 
     public User getUser() {
         return user;

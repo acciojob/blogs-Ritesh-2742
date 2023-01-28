@@ -4,25 +4,29 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name="user_table")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String username;
-    private String password;
-    private String firstname;
-    private String lastname;
-    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
-    private List<Blog> blogList;
-    public User() {
-    }
 
-    public User(String username, String password, String firstname, String lastname) {
+    private String username;
+
+    private String password;
+
+    private String firstName;
+
+    private String lastName;
+
+    public User(String username, String password, String firstName, String lastName) {
         this.username = username;
         this.password = password;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User() {
     }
 
     public int getId() {
@@ -49,21 +53,24 @@ public class User {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Blog> blogList;
 
     public List<Blog> getBlogList() {
         return blogList;
@@ -73,3 +80,6 @@ public class User {
         this.blogList = blogList;
     }
 }
+
+
+
